@@ -24,7 +24,7 @@ Set the value `enable` to `true`, add the obtained APP ID (`appId`), and edit ot
 cusdis:
   enable: false
   count: true
-  host: # your cusdis host (Default: https://cusdis.com)
   appId: # your appid for this website
+  host: # your cusdis host (Default: https://cusdis.com)
   lang: # Language, available values: zh-cn | zh-tw | ja | es | tr | pt-BR | oc | fr | id | ca | fi
 ```

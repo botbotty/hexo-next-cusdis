@@ -1,0 +1,35 @@
+{{ next_data("cusdis", config.cusdis) }}
+
+<script>
+document.addEventListener("page:loaded", () => {
+	NexT.utils.loadComments("#cusdis_thread")
+	.then(() => {
+		const node = document.getElementById("cusdis_thread");
+		node.setAttribute("data-host", CONFIG.cusdis.host);
+		node.setAttribute("data-app-id", CONFIG.cusdis.appId);
+		node.setAttribute("data-page-id", "{{ page.path }}");
+		node.setAttribute("data-page-url", "{{ page.permalink }}");
+		node.setAttribute("data-page-title", "{{ page.title }}");
+	})
+	.then(async () => {
+		window.CUSDIS_LOCALE = {};
+		if (CONFIG.cusdis.lang) {
+			await NexT.utils.getScript(
+				`https://cusdis.com/js/widget/lang/${CONFIG.cusdis.lang}.js`,
+				{ attributes: { defer: true } }
+			)
+		}
+	})
+	.then(() => {
+		if (CONFIG.cusdis.locale) {
+			Object.assign(window.CUSDIS_LOCALE, CONFIG.cusdis.locale);
+		}
+	})
+	.then(() => {
+		NexT.utils.getScript(
+			"https://cusdis.com/js/cusdis.es.js",
+			{ attributes: { defer: true } }
+		)
+	});
+});
+</script>
