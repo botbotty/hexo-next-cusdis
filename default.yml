@@ -1,0 +1,8 @@
+# Cusdis
+# For more information: https://cusdis.com/, https://github.com/djyde/cusdis
+cusdis:
+  enable: false
+  count: true
+  host: # your cusdis host (Default: https://cusdis.com)
+  appId: # your appid for this website
+  lang: # Language, available values: zh-cn | zh-tw | ja | es | tr | pt-BR | oc | fr | id | ca | fi

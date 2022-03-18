@@ -1,0 +1,24 @@
+{
+  "name": "hexo-next-cusdis",
+  "version": "1.0.0",
+  "description": "Cusdis comment system for NexT.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "tsc"
+  },
+  "keywords": [],
+  "author": "Huang Jian <JyanHw@outlook.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bottycode/hexo-next-cusdis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bottycode/hexo-next-cusdis/issues"
+  },
+  "homepage": "https://github.com/bottycode/hexo-next-cusdis#readme",
+  "dependencies": {
+    "@next-theme/utils": "^1.3.0",
+    "typescript": "^4.6.2"
+  }
+}
