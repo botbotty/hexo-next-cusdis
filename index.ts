@@ -1,13 +1,11 @@
-import path from "path";
-
-type SupportedLanguage = "zh-cn" | "zh-tw" | "ja" | "es" | "tr" | "pt-br" | "oc" | "fr" | "id" | "ca" | "fi";
+import Util from "@next-theme/utils";
 
 interface CusdisConfig {
 	enable: boolean;
 	count?: boolean;
 	appId?: string;
 	host?: string;
-	lang?: SupportedLanguage;
+	lang?: string;
 	locale?: {
 		powered_by?: string;
 		post_comment?: string;
@@ -24,34 +22,22 @@ interface CusdisConfig {
 	}
 }
 
-function main() {
-	const config: CusdisConfig = Object.assign(
-		{ enable: false, },
-		hexo.config.cusdis || {},
-		hexo.theme.config.cusdis || {},
-		hexo.config.theme_config.cusdis || {},
-	);
+const util = new Util(hexo, __dirname);
 
-	if (!config.enable) {
-		return;
-	}
+// Add comment
+hexo.extend.filter.register("theme_inject", injects => {
+	const config: CusdisConfig = util.defaultConfigFile("cusdis", "default.yml");
+
+	if (!config.enable) return;
 
 	if (!config.appId) {
-		hexo.log.warn("cusdis.appId can't be null or empty.");
+		hexo.log.warn("Cusdis is enabled but appId is not set.");
 		return;
 	}
 
-	config.host = config.host ? config.host : "https://cusdis.com";
-	hexo.config.cusdis = config;
+	injects.comment.raw("cusdis", '<div class="comments" id="cusdis_thread"></div>', {}, { cache: true });
+	injects.bodyEnd.file("cusdis", util.getFilePath("cusdis.njk"));
+});
 
-	// Add comment
-	hexo.extend.filter.register("theme_inject", injects => {
-		injects.comment.raw("cusdis", '<div class="comments" id="cusdis_thread"></div>', {}, { cache: true });
-		injects.bodyEnd.file("cusdis", path.join(__dirname, "cusdis.njk"));
-	});
-
-	// Add post_mta
-	// TODO
-}
-
-main();
+// Add post_mta
+// TODO

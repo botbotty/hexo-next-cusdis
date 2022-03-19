@@ -1,27 +1,27 @@
-{{ next_data("cusdis", config.cusdis) }}
+{{ next_data("CUSDIS", config.cusdis) }}
 
 <script>
 document.addEventListener("page:loaded", () => {
 	NexT.utils.loadComments("#cusdis_thread")
 	.then(() => {
 		const node = document.getElementById("cusdis_thread");
-		node.setAttribute("data-host", CONFIG.cusdis.host);
-		node.setAttribute("data-app-id", CONFIG.cusdis.appId);
+		node.setAttribute("data-host", CONFIG.CUSDIS.host || "https://cusdis.com");
+		node.setAttribute("data-app-id", CONFIG.CUSDIS.appId);
 		node.setAttribute("data-page-id", "{{ page.path }}");
 		node.setAttribute("data-page-url", "{{ page.permalink }}");
 		node.setAttribute("data-page-title", "{{ page.title }}");
 	})
 	.then(async () => {
 		window.CUSDIS_LOCALE = {};
-		if (!CONFIG.cusdis.lang) return;
+		if (!CONFIG.CUSDIS.lang || CONFIG.CUSDIS.lang === "en") return;
 		await NexT.utils.getScript(
-			`https://cusdis.com/js/widget/lang/${CONFIG.cusdis.lang}.js`,
+			`https://cusdis.com/js/widget/lang/${CONFIG.CUSDIS.lang}.js`,
 			{ attributes: { defer: true } }
 		)
 	})
 	.then(() => {
-		if (!CONFIG.cusdis.locale) return;
-		Object.assign(window.CUSDIS_LOCALE, CONFIG.cusdis.locale);
+		if (!CONFIG.CUSDIS.locale) return;
+		Object.assign(window.CUSDIS_LOCALE, CONFIG.CUSDIS.locale);
 	})
 	.then(async () => {
 		await NexT.utils.getScript(
@@ -30,7 +30,7 @@ document.addEventListener("page:loaded", () => {
 		)
 	})
 	.then(() => {
-		if (!CONFIG.cusdis.count) return;
+		if (!CONFIG.CUSDIS.count) return;
 		const cusdis = document.querySelector("#cusdis_thread iframe").contentWindow;
 		cusdis.addEventListener("load", () => {
 			const comment = cusdis.document.getElementById("root");
@@ -61,7 +61,7 @@ document.addEventListener("page:loaded", () => {
 			number.setAttribute("id", "cusdis_count_num");
 			number.setAttribute("data-cusdis-count-page-id", "{{ page.path }}");
 			number.innerText = "0";
-			string.innerText = string_i18n[CONFIG.cusdis.lang || "en"] || string_i18n["en"];
+			string.innerText = string_i18n[CONFIG.CUSDIS.lang] || string_i18n["en"];
 			line.setAttribute("class", "mb-2");
 
 			count.append(number, " ", string, line);
@@ -71,8 +71,8 @@ document.addEventListener("page:loaded", () => {
 				"https://cusdis.com/js/cusdis-count.umd.js", {
 				attributes: {
 					defer: true,
-					"data-host": CONFIG.cusdis.host,
-					"data-app-id": CONFIG.cusdis.appId
+					"data-host": CONFIG.CUSDIS.host || "https://cusdis.com",
+					"data-app-id": CONFIG.CUSDIS.appId
 				}}
 			)
 		});

@@ -23,7 +23,7 @@ Set the value `enable` to `true`, add the obtained APP ID (`appId`), and edit ot
 # For more information: https://cusdis.com/, https://github.com/djyde/cusdis
 cusdis:
   enable: false
-  count: true
+  count: false # Show comment count
   appId: # your appid for this website
   host: # your cusdis host (Default: https://cusdis.com)
   lang: # Language, check https://github.com/djyde/cusdis/tree/master/widget/lang for available values
