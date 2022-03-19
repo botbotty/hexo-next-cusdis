@@ -44,11 +44,6 @@ function main() {
 	config.host = config.host ? config.host : "https://cusdis.com";
 	hexo.config.cusdis = config;
 
-	if (config.count) {
-		// Add count
-		// TODO
-	}
-
 	// Add comment
 	hexo.extend.filter.register("theme_inject", injects => {
 		injects.comment.raw("cusdis", '<div class="comments" id="cusdis_thread"></div>', {}, { cache: true });

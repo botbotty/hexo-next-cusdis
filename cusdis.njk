@@ -13,23 +13,69 @@ document.addEventListener("page:loaded", () => {
 	})
 	.then(async () => {
 		window.CUSDIS_LOCALE = {};
-		if (CONFIG.cusdis.lang) {
-			await NexT.utils.getScript(
-				`https://cusdis.com/js/widget/lang/${CONFIG.cusdis.lang}.js`,
-				{ attributes: { defer: true } }
-			)
-		}
+		if (!CONFIG.cusdis.lang) return;
+		await NexT.utils.getScript(
+			`https://cusdis.com/js/widget/lang/${CONFIG.cusdis.lang}.js`,
+			{ attributes: { defer: true } }
+		)
 	})
 	.then(() => {
-		if (CONFIG.cusdis.locale) {
-			Object.assign(window.CUSDIS_LOCALE, CONFIG.cusdis.locale);
-		}
+		if (!CONFIG.cusdis.locale) return;
+		Object.assign(window.CUSDIS_LOCALE, CONFIG.cusdis.locale);
 	})
-	.then(() => {
-		NexT.utils.getScript(
+	.then(async () => {
+		await NexT.utils.getScript(
 			"https://cusdis.com/js/cusdis.es.js",
 			{ attributes: { defer: true } }
 		)
+	})
+	.then(() => {
+		if (!CONFIG.cusdis.count) return;
+		const cusdis = document.querySelector("#cusdis_thread iframe").contentWindow;
+		cusdis.addEventListener("load", () => {
+			const comment = cusdis.document.getElementById("root");
+			const count = cusdis.document.createElement("div");
+			const number = cusdis.document.createElement("span");
+			const string = cusdis.document.createElement("span");
+			const line = cusdis.document.createElement("hr");
+			const string_i18n = {
+				"bg": "коментара",
+				"ca": "comentaris",
+				"en": "comments",
+				"es": "comentarios",
+				"fi": "kommenttia",
+				"fr": "commentaires",
+				"id": "komentar",
+				"ja": "件のコメント",
+				"ko": "개의 댓글",
+				"oc": "comentaris",
+				"pt-br": "comentários",
+				"ru": "комментариев",
+				"tr": "yorum",
+				"zh-cn": "条评论",
+				"zh-tw": "則留言",
+			}
+
+			count.setAttribute("id", "cusdis_count");
+			count.setAttribute("class", "px-1");
+			number.setAttribute("id", "cusdis_count_num");
+			number.setAttribute("data-cusdis-count-page-id", "{{ page.path }}");
+			number.innerText = "0";
+			string.innerText = string_i18n[CONFIG.cusdis.lang || "en"] || string_i18n["en"];
+			line.setAttribute("class", "mb-2");
+
+			count.append(number, " ", string, line);
+			comment.insertBefore(count, comment.firstElementChild);
+
+			NexT.utils.getScript(
+				"https://cusdis.com/js/cusdis-count.umd.js", {
+				attributes: {
+					defer: true,
+					"data-host": CONFIG.cusdis.host,
+					"data-app-id": CONFIG.cusdis.appId
+				}}
+			)
+		});
 	});
 });
 </script>

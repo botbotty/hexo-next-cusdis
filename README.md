@@ -26,7 +26,7 @@ cusdis:
   count: true
   appId: # your appid for this website
   host: # your cusdis host (Default: https://cusdis.com)
-  lang: # Language, available values: zh-cn | zh-tw | ja | es | tr | pt-br | oc | fr | id | ca | fi
+  lang: # Language, check https://github.com/djyde/cusdis/tree/master/widget/lang for available values
   locale: # Uncomment and modify the following items to override cusdis's i18n strings
     # powered_by: 'Comments powered by Cusdis'
     # post_comment: 'Comment'
