@@ -26,5 +26,18 @@ cusdis:
   count: true
   appId: # your appid for this website
   host: # your cusdis host (Default: https://cusdis.com)
-  lang: # Language, available values: zh-cn | zh-tw | ja | es | tr | pt-BR | oc | fr | id | ca | fi
+  lang: # Language, available values: zh-cn | zh-tw | ja | es | tr | pt-br | oc | fr | id | ca | fi
+  locale: # Uncomment and modify the following items to override cusdis's i18n strings
+    # powered_by: 'Comments powered by Cusdis'
+    # post_comment: 'Comment'
+    # loading: 'Loading'
+    # email: 'Email (optional)'
+    # nickname: 'Nickname'
+    # reply_placeholder: 'Reply...'
+    # reply_btn: 'Reply'
+    # sending: 'sending...'
+    # mod_badge: 'MOD'
+    # content_is_required: 'Content is required'
+    # nickname_is_required: 'Nickname is required'
+    # comment_has_been_sent: 'Your comment has been sent. Please wait for approval.'
 ```
